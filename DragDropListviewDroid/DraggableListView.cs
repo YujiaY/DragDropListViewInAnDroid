@@ -49,7 +49,7 @@ namespace DragDropListviewDroid
 			}
 		}
 
-		const int LINE_THICKNESS = 25;
+		const int LINE_THICKNESS = 20;
 		const int INVALID_ID = -1;
 		const int INVALID_POINTER_ID = -1;
 
@@ -141,13 +141,18 @@ namespace DragDropListviewDroid
 		}
 
 		/// <summary>
-		/// Determines if the touch event was right or left swipe
+		/// Determines if the touch event was right or left swipe and always returns false
 		/// </summary>
 		public bool OnFling (MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
 		{
 			return false;
 		}
 
+        /// <summary>
+        /// Determines if triggered by a single tap and always returns false
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
 		public bool OnSingleTapUp (MotionEvent e)
 		{
 			return false;
@@ -177,11 +182,23 @@ namespace DragDropListviewDroid
 			UpdateNeighborViewsForID (mMobileItemId);
 		}
 
+        /// <summary>
+        /// Determines what happens when  a scroll occurs and always returns false
+        /// </summary>
+        /// <param name="e1"></param>
+        /// <param name="e2"></param>
+        /// <param name="distanceX"></param>
+        /// <param name="distanceY"></param>
+        /// <returns></returns>
 		public bool OnScroll (MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
 		{
 			return false;
 		}
 
+        /// <summary>
+        /// Provide visual feedback to the user to let them know that their action has been recognized
+        /// </summary>
+        /// <param name="e"></param>
 		public void OnShowPress (MotionEvent e)
 		{
 		}

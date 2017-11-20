@@ -20,7 +20,7 @@ namespace DragDropListviewDroid
             base.OnCreate(bundle);
             SetContentView (Resource.Layout.Main);
 
-
+            
             Button LoggingBt = FindViewById<Button>(Resource.Id.logbutton);
 
             string tag = "myapp";
@@ -29,7 +29,7 @@ namespace DragDropListviewDroid
             int count = 0;
 
            Log.Info(tag, "Setting up button event handler. The variable count is " + count);
-
+            
             LoggingBt.Click += ((o, e) =>
             {
             LoggingBt.Text = string.Format("{0} clicks!", ++count);
@@ -37,16 +37,21 @@ namespace DragDropListviewDroid
             });
 
             var list = FindViewById<DraggableListView>(Resource.Id.draggableListView1);        
-
+            
+            //Initialize the tiems in the list
             items = new List<string> {
-                "Vegetables",
-                "Fruits",
-                "Flower Buds",
-                "Legumes",
-                "Trees",
-                "Grass",
-                "Petals",
-                "Shrubs",
+                "Aliceblue",
+                "Antiquewhite",
+                "Aqua",
+                "Aquamarine",
+                "Azure",
+                "Beige",
+                "Bisque",
+                "Black",
+                "Blanchedalmond",
+                "Blue",
+                "Blueviolet",
+                "Brown"
             };
             list.Adapter = new DraggableListAdapter(this, items);
         }
@@ -60,6 +65,11 @@ namespace DragDropListviewDroid
 
             Activity context;
 
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="context"></param>
+            /// <param name="items"></param>
             public DraggableListAdapter(Activity context, List<string> items) : base()
             {
                 Items = items;
@@ -67,16 +77,34 @@ namespace DragDropListviewDroid
                 mMobileCellPosition = int.MinValue;
             }
 
+            /// <summary>
+            /// Override the default method to return an Item with index of position
+            /// </summary>
+            /// <param name="position"></param>
+            /// <returns></returns>
             public override Java.Lang.Object GetItem(int position)
             {
                 return Items[position];
             }
 
+
+            /// <summary>
+            /// Override the default method to return a int of position
+            /// </summary>
+            /// <param name="position"></param>
+            /// <returns></returns>
             public override long GetItemId(int position)
             {
                 return position;
             }
 
+            /// <summary>
+            /// Override the default method to return a new View cell
+            /// </summary>
+            /// <param name="position"></param>
+            /// <param name="convertView"></param>
+            /// <param name="parent"></param>
+            /// <returns></returns>
             public override View GetView(int position, View convertView, ViewGroup parent)
             {
                 //View setup
@@ -90,14 +118,14 @@ namespace DragDropListviewDroid
                     //cell.SetBackgroundDrawable(Drawable d);
                     cell.SetBackgroundResource(Resource.Drawable.Icon);
                     cell.SetPaddingRelative(32 , 10, 15, 10);
-                    cell.SetBackgroundColor(Color.Aquamarine);
+                    cell.SetBackgroundColor(Color.PowderBlue);
                 }
 
                 var text = cell.FindViewById<TextView>(Android.Resource.Id.Text1);
                 if (text != null)
                 {
                     //text.Text = position.ToString();
-                    text.Text = Items[position]; // I changed this line to show the item values in the list
+                    text.Text = Items[position]; // Show the item values in the list
                 }
 
                 cell.Visibility = mMobileCellPosition == position ? ViewStates.Invisible : ViewStates.Visible;
@@ -106,6 +134,9 @@ namespace DragDropListviewDroid
                 return cell;
             }
 
+            /// <summary>
+            /// Override the default method to return the value of Count
+            /// </summary>
             public override int Count
             {
                 get
@@ -113,7 +144,11 @@ namespace DragDropListviewDroid
                     return Items.Count;
                 }
             }
-
+            /// <summary>
+            /// Swap the items in the list
+            /// </summary>
+            /// <param name="indexOne"></param>
+            /// <param name="indexTwo"></param>
             public void SwapItems(int indexOne, int indexTwo)
             {
                 var oldValue = Items[indexOne];
